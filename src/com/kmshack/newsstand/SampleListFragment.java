@@ -58,7 +58,21 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
 		super.onActivityCreated(savedInstanceState);
 
 		mListView.setOnScrollListener(this);
-		mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, mListItems));
+
+       // mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, mListItems));
+        ArrayList<Entry> sortedlist=new ArrayList<Entry>();
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("Create a new group!", "", "", ""));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
+        sortedlist.add(new Entry("Create a new group!", "", "", ""));
+        EntryAdapter eadapter = new EntryAdapter(getActivity(),sortedlist);
+        mListView.setAdapter(eadapter);
 	}
 
 	@Override

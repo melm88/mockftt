@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameLayout1"
+    android:layout_width="wrap_content"
+   android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:text="5"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:padding="2sp"
+        android:gravity="center"
+        android:background="@drawable/circle"
+        android:layout_gravity="top|right" />
+
+</FrameLayout>

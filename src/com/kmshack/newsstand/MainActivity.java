@@ -249,13 +249,34 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 
 		@Override
 		public Fragment getItem(int position) {
-			ScrollTabHolderFragment fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+            Fragment fragment1=null;
+            android.support.v4.app.FragmentManager fm =   getSupportFragmentManager();
+			ScrollTabHolderFragment fragment = null;
+            if (position == 0)
+            fragment = (ScrollTabHolderFragment) GlobalFeedsListFragment.newInstance(position);
+            else if (position == 1)
+                fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+            else
 
+                 fragment1 = (Fragment) fm.findFragmentByTag("settings");
+
+            android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.action_bar_container, fragment1);
+            ft.commit();
+            if(fragment!=null){
 			mScrollTabHolders.put(position, fragment);
+
+
+            fragment.setScrollTabHolder(mListener);}
+
 			if (mListener != null) {
+                if(fragment!=null)
+
 				fragment.setScrollTabHolder(mListener);
 			}
 
+            if(fragment==null)
+                return fragment1;
 			return fragment;
 		}
 

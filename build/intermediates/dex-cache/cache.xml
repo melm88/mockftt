@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Tara\FTT-UI\libs\nineoldandroids-2.4.0.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="59f19e43354d32de831379c23ce03bb259a4c2b7">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\nineoldandroids-2.4.0-5573e59b65b1d011c379466fc00a6a54def67376.jar" />
+    </item>
+    <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-5152bbbda82a4622bfc599f4826e3679af1e872a.jar" />
+    </item>
+    <item
+        jar="C:\Users\hari\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-e74d41b708684e8dce4763c4839cddbb768fbeae.jar" />
+    </item>
+    <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-9705ae2683a5255e55a1e950229b60c0febc6af2.jar" />
+    </item>
+    <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-004ddde7d26a957b0651a9d1f71251158f7e2096.jar" />
+    </item>
+
+</items>
