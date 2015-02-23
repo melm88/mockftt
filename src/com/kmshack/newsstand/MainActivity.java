@@ -1,9 +1,13 @@
 package com.kmshack.newsstand;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,6 +25,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.flavienlaurent.notboringactionbar.AlphaForegroundColorSpan;
@@ -30,6 +35,7 @@ import com.nineoldandroids.view.ViewHelper;
 public class MainActivity extends ActionBarActivity implements ScrollTabHolder, ViewPager.OnPageChangeListener {
 
 	private static AccelerateDecelerateInterpolator sSmoothInterpolator = new AccelerateDecelerateInterpolator();
+	public static int PickImageId = 1000;
 
 	private KenBurnsSupportView mHeaderPicture;
 	private View mHeader;
@@ -96,18 +102,67 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		getSupportActionBar().setBackgroundDrawable(null);
 	}
 	
+	
+	
 	private View.OnTouchListener imageTouchListener = new View.OnTouchListener() {
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
 	        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	            // pointer goes down
-	        	mHeaderLogo.setImageResource(R.drawable.ic_launcher);
+	        	//mHeaderLogo.setImageResource(R.drawable.ic_launcher);
+	        	
+	        	//ImagePicker Intent
+	        	Intent iimg= new Intent();
+	        	iimg.setType("image/*");
+	        	iimg.setAction(iimg.ACTION_GET_CONTENT);
+	        	Log.d("clicker", "Launching...");
+	    	    startActivityForResult(iimg, PickImageId);
 	        }
 	        // also let the framework process the event
 	        return false;
 	    }
 		
 	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+	    if ((requestCode == PickImageId) && (resultCode == RESULT_OK) && (data != null))
+	    {
+	        Uri uri = data.getData();
+	        Log.d("clicker", "OnAct: "+uri);
+	        mHeaderLogo.setImageURI(uri);
+	        mHeaderLogo.setMaxWidth(100);
+	        mHeaderLogo.setMaxHeight(100);
+	        mHeaderLogo.setMinimumWidth(50);
+	        mHeaderLogo.setMinimumHeight(50);
+	        
+	        //Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT/1500).show();
+
+	        String path = getPathToImage(uri);
+	        //Toast.makeText(this, path, Toast.LENGTH_SHORT).show();;
+	    }
+	}
+	
+	private String getPathToImage(Uri uri)
+	{
+	    String path = null;
+	    // The projection contains the columns we want to return in our query.
+	    String[] projection = new String[] { MediaStore.Images.Media.DATA };
+	    Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+	    //Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+	    Log.d("clicker", "Cursor");
+	    if (cursor != null)
+	    {
+	    	Log.d("clicker", "NOT NULL Cursor");
+	        int columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+	        Log.d("clicker", "Cursor Index: "+columnIndex);
+	        cursor.moveToFirst();
+	        path = cursor.getString(columnIndex);
+	        Log.d("clicker", "Cursor Path: "+path);
+	        cursor.close();
+	    }
+	    return path;
+	}
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
