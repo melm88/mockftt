@@ -70,7 +70,7 @@ public class GlobalFeedsListFragment extends ScrollTabHolderFragment implements 
         sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
         sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
         sortedlist.add(new Entry("Create a new group!", "", "", ""));
-        EntryAdapter eadapter = new EntryAdapter(getActivity(),sortedlist);
+        FeedEntryAdapter eadapter = new FeedEntryAdapter(getActivity(),sortedlist);
         mListView.setAdapter(eadapter);
 	}
 

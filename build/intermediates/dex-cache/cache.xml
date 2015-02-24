@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-9f6a6e91f33857920bdb928a345781b34db7b6c3.jar" />
+    </item>
+    <item
         jar="C:\Tara\FTT-UI\libs\nineoldandroids-2.4.0.jar"
         jumboMode="false"
         revision="21.0.1"

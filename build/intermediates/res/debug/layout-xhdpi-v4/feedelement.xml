@@ -1,0 +1,117 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="300dp"
+    android:layout_width="wrap_content"
+    android:orientation="vertical"
+     >
+
+<android.support.v7.widget.CardView
+xmlns:card_view="http://schemas.android.com/apk/res-auto"
+android:id="@+id/card_view"
+android:layout_gravity="center"
+android:layout_width="match_parent"
+android:layout_height="300dp"
+card_view:cardCornerRadius="4dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        >
+    <FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/frameLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="6dp"
+
+
+            >
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:padding="2dp" />
+
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="20dp"
+                android:layout_height="70dp"
+                android:padding="2dp"
+                android:src="@color/green" />
+
+            <!-- Title Of News -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18dip"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ds1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:textColor="@color/black"
+                    android:textSize="12dip"
+                    android:typeface="serif" />
+
+                <!-- News Image -->
+            </LinearLayout>
+
+            <!-- News Content -->
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <Button
+                    android:id="@+id/imageButton1"
+                    android:layout_width="28dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription=""
+                    android:background="@drawable/arrow_right" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+        <ImageView
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pic1" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
+</LinearLayout><!-- From: file:/C:/Tara/FTT-UI/res/layout-xhdpi/feedelement.xml -->
