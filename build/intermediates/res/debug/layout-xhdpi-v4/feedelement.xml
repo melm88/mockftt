@@ -94,11 +94,11 @@ card_view:cardCornerRadius="4dp">
 
                 <Button
                     android:id="@+id/imageButton1"
-                    android:layout_width="28dp"
-                    android:layout_height="18dp"
+                    android:layout_width="18dp"
+                    android:layout_height="28dp"
                     android:layout_alignParentRight="true"
                     android:contentDescription=""
-                    android:background="@drawable/arrow_right" />
+                    android:background="@drawable/arrow_down" />
 
             </RelativeLayout>
 
