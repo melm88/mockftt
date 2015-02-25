@@ -7,10 +7,15 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -42,6 +47,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.flavienlaurent.notboringactionbar.AlphaForegroundColorSpan;
 import com.flavienlaurent.notboringactionbar.KenBurnsSupportView;
 import com.nineoldandroids.view.ViewHelper;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends ActionBarActivity implements ScrollTabHolder, ViewPager.OnPageChangeListener {
 
@@ -148,7 +154,18 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	        //Toast.makeText(this, path, Toast.LENGTH_SHORT).show();;
 	        
 	        //setPic(path, mHeaderLogo);
-	        resizedPic(path, uri, mHeaderLogo);
+	        if(path != null)
+	        	resizedPic(path, uri, mHeaderLogo);
+	        else
+	        	Toast.makeText(this, "Unable to get image. Please select image from Gallery", Toast.LENGTH_SHORT/1000).show();
+	        
+	        /*Log.d("clicker","Path: "+path);
+	        Picasso.with(this)
+	        .load(uri)
+	        .placeholder(R.drawable.ic_header_logo)
+	        .error(R.drawable.ic_header_logo)
+	        .transform(new RoundedTransformation(50, 4))	    
+	        .into(mHeaderLogo);*/
 	        
 	        /*mHeaderLogo.setImageURI(uri);
 	        mHeaderLogo.setMaxWidth(100);
@@ -163,15 +180,15 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		try {
 			exifInterface = new ExifInterface(src);
 			int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-			Log.d("clicker","Init... EXIF "+orientation);
+			Log.d("clickerz","Init... EXIF "+orientation);
 			int width = bitmap.getWidth();
 		    int height = bitmap.getHeight();
+		    Log.d("clickerz", "Image H:"+height+" | W:"+width + " || Rec H:"+newHeight+" | W:"+newWidth);
 		    float scaleWidth = ((float) newWidth) / width;
 		    float scaleHeight = ((float) newHeight) / height;
-		    Log.d("clicker", "scaled H:"+scaleHeight+" | W:"+scaleWidth);
+		    Log.d("clickerz", "Scaled H:"+scaleHeight+" | W:"+scaleWidth);
 		    
-			Matrix matrix = new Matrix();
-			
+			Matrix matrix = new Matrix();			
 			
 			switch (orientation) {
 		    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
@@ -203,14 +220,31 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		    }			
 		    
 			//matrix.postScale(0.064f, 0.036f);
+			if((float)width/(float)height < 1.75f && (orientation != 1)) {
+				matrix.postScale(scaleWidth, scaleHeight);
+				Log.d("clickerz","First: "+((float)width/(float)height)+ " | OR: "+orientation);
+			} else if(orientation == 1 || orientation == 0){
+				matrix.postScale(scaleWidth, scaleHeight);
+				Log.d("clickerz","Match: "+((float)width/(float)height)+ " | OR: "+orientation);
+			} else {
+				matrix.postScale(scaleHeight, scaleWidth);
+				Log.d("clickerz","Second: "+((float)width/(float)height)+ " | OR: "+orientation);
+			}
+			
+			Bitmap oriented = null;
 			 try {
-				 Bitmap oriented = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-				 mHeaderLogo.setImageDrawable(new BitmapDrawable(oriented));
-				 bitmap.recycle();
+				 oriented = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+				 Bitmap rounded_oriented = new RoundedTransformation(75, 4).transform(oriented);
+				 mHeaderLogo.setImageDrawable(new BitmapDrawable(rounded_oriented));
+				 if(bitmap!=null && !bitmap.isRecycled())
+					 bitmap.recycle();
 				 return oriented;
 				 } catch (OutOfMemoryError e) {
 				 e.printStackTrace();
-				 return bitmap;
+				 if(oriented == null)
+					 return bitmap;
+				 else
+					 return oriented;
 				 } 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -469,4 +503,39 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		}
 
 	}
+}
+
+
+class RoundedTransformation implements com.squareup.picasso.Transformation {
+    private final int radius;
+    private final int margin;  // dp
+  
+    // radius is corner radii in dp
+    // margin is the board in dp
+    public RoundedTransformation(final int radius, final int margin) {
+        this.radius = radius;
+        this.margin = margin;
+    }
+  
+    @Override
+    public Bitmap transform(final Bitmap source) {
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+  
+        Bitmap output = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        canvas.drawRoundRect(new RectF(margin, margin, source.getWidth() - margin, source.getHeight() - margin), radius, radius, paint);
+  
+        if (source != output) {
+            source.recycle();
+        }
+  
+        return output;
+    }
+  
+    @Override
+    public String key() {
+        return "rounded";
+    }
 }
