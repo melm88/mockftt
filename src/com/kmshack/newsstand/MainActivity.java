@@ -1,9 +1,23 @@
 package com.kmshack.newsstand;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -20,7 +34,9 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.flavienlaurent.notboringactionbar.AlphaForegroundColorSpan;
@@ -30,6 +46,7 @@ import com.nineoldandroids.view.ViewHelper;
 public class MainActivity extends ActionBarActivity implements ScrollTabHolder, ViewPager.OnPageChangeListener {
 
 	private static AccelerateDecelerateInterpolator sSmoothInterpolator = new AccelerateDecelerateInterpolator();
+	public static int PickImageId = 1000;
 
 	private KenBurnsSupportView mHeaderPicture;
 	private View mHeader;
@@ -71,7 +88,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		title = (TextView) findViewById(R.id.title);
 
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
-		mHeaderPicture.setResourceIds(R.drawable.pic0, R.drawable.pic1);
+		mHeaderPicture.setResourceIds(R.drawable.header_color_1, R.drawable.header_color_2);
 		mHeaderLogo = (ImageView) findViewById(R.id.header_logo);
 		mHeader = findViewById(R.id.header);
 
@@ -96,18 +113,206 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		getSupportActionBar().setBackgroundDrawable(null);
 	}
 	
+	
+	
 	private View.OnTouchListener imageTouchListener = new View.OnTouchListener() {
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
 	        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	            // pointer goes down
-	        	mHeaderLogo.setImageResource(R.drawable.ic_launcher);
+	        	//mHeaderLogo.setImageResource(R.drawable.ic_launcher);
+	        	
+	        	//ImagePicker Intent
+	        	Intent iimg= new Intent();
+	        	iimg.setType("image/*");
+	        	iimg.setAction(iimg.ACTION_GET_CONTENT);
+	        	Log.d("clicker", "Launching...");
+	    	    startActivityForResult(iimg, PickImageId);
 	        }
 	        // also let the framework process the event
 	        return false;
 	    }
 		
 	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+	    if ((requestCode == PickImageId) && (resultCode == RESULT_OK) && (data != null))
+	    {
+	        Uri uri = data.getData();
+	        Log.d("clicker", "OnAct: "+uri);
+	        
+	        //Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT/1500).show();
+
+	        String path = getPathToImage(uri);
+	        //Toast.makeText(this, path, Toast.LENGTH_SHORT).show();;
+	        
+	        //setPic(path, mHeaderLogo);
+	        resizedPic(path, uri, mHeaderLogo);
+	        
+	        /*mHeaderLogo.setImageURI(uri);
+	        mHeaderLogo.setMaxWidth(100);
+	        mHeaderLogo.setMaxHeight(100);
+	        mHeaderLogo.setMinimumWidth(50);
+	        mHeaderLogo.setMinimumHeight(50);*/
+	    }
+	}
+	
+	private Bitmap getOrientationImage(String src, Bitmap bitmap, int newWidth, int newHeight){
+		ExifInterface exifInterface;
+		try {
+			exifInterface = new ExifInterface(src);
+			int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+			Log.d("clicker","Init... EXIF "+orientation);
+			int width = bitmap.getWidth();
+		    int height = bitmap.getHeight();
+		    float scaleWidth = ((float) newWidth) / width;
+		    float scaleHeight = ((float) newHeight) / height;
+		    Log.d("clicker", "scaled H:"+scaleHeight+" | W:"+scaleWidth);
+		    
+			Matrix matrix = new Matrix();
+			
+			
+			switch (orientation) {
+		    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+		        //matrix.setScale(-1, 1);
+		        break;
+		    case ExifInterface.ORIENTATION_ROTATE_180:
+		        matrix.setRotate(180);
+		        break;
+		    case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+		        matrix.setRotate(180);
+		        //matrix.postScale(-1, 1);
+		        break;
+		    case ExifInterface.ORIENTATION_TRANSPOSE:
+		        matrix.setRotate(90);
+		        //matrix.postScale(-1, 1);
+		        break;
+		    case ExifInterface.ORIENTATION_ROTATE_90:
+		        matrix.setRotate(90);
+		        break;
+		    case ExifInterface.ORIENTATION_TRANSVERSE:
+		        matrix.setRotate(-90);
+		        //matrix.postScale(-1, 1);
+		        break;
+		    case ExifInterface.ORIENTATION_ROTATE_270:
+		        matrix.setRotate(-90);
+		        break;
+		    default:
+		        Log.d("clicker", "returning Bitmap");
+		    }			
+		    
+			//matrix.postScale(0.064f, 0.036f);
+			 try {
+				 Bitmap oriented = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+				 mHeaderLogo.setImageDrawable(new BitmapDrawable(oriented));
+				 bitmap.recycle();
+				 return oriented;
+				 } catch (OutOfMemoryError e) {
+				 e.printStackTrace();
+				 return bitmap;
+				 } 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
+	
+	private void resizedPic(String path, Uri uri, ImageView destination){
+		int h = 250;
+		int w = 250;
+		try {
+			
+			//Bitmap.createScaledBitmap(bmp, w, h, true);
+			//mHeaderLogo.setImageBitmap(bmp);
+			//mHeaderLogo.setImageDrawable(getResizedBitmap(bmp, h, w));
+			Log.d("clicker","Initiate...");
+			Options options = new BitmapFactory.Options();
+		    options.inScaled = false;
+		    Bitmap bmp = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
+			getOrientationImage(path, bmp, w, h);
+			//mHeaderLogo.setImageDrawable(new BitmapDrawable(getOrientationImage(path, bmp, w, h)));
+			Log.d("clicker","Done...");			
+			if(bmp!=null && !bmp.isRecycled()){
+				bmp.recycle();
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+
+	public Drawable getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    Log.d("clicker", "scaled H:"+scaleHeight+" | W:"+scaleWidth);
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+	    
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    BitmapDrawable bmd = new BitmapDrawable(resizedBitmap);
+	    resizedBitmap.recycle();
+	    return bmd;
+	}
+
+
+	
+	private void setPic(String imagePath, ImageView destination) {
+	    int targetW = destination.getWidth();
+	    int targetH = destination.getHeight();
+	    Log.d("clicker", "W: "+targetW+" | H:"+targetH);
+	    
+	    // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    
+	    BitmapFactory.decodeFile(imagePath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+	    Log.d("clicker", "pW: "+photoW+" | pH:"+photoH);
+
+	    // Determine how much to scale down the image
+	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+	    Log.d("clicker", "scale: "+scaleFactor);
+
+	    // Decode the image file into a Bitmap sized to fill the View
+	    bmOptions.inJustDecodeBounds = false;
+	    bmOptions.inSampleSize = scaleFactor;
+	    
+
+	    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
+	    destination.setImageBitmap(bitmap);
+	}
+	
+	private String getPathToImage(Uri uri)
+	{
+	    String path = null;
+	    // The projection contains the columns we want to return in our query.
+	    String[] projection = new String[] { MediaStore.Images.Media.DATA };
+	    Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+	    //Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+	    Log.d("clicker", "Cursor");
+	    if (cursor != null)
+	    {
+	    	Log.d("clicker", "NOT NULL Cursor");
+	        int columnIndex = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+	        Log.d("clicker", "Cursor Index: "+columnIndex);
+	        cursor.moveToFirst();
+	        path = cursor.getString(columnIndex);
+	        Log.d("clicker", "Cursor Path: "+path);
+	        cursor.close();
+	    }
+	    return path;
+	}
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
