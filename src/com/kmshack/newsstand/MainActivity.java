@@ -459,9 +459,12 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 			ScrollTabHolderFragment fragment = null;
             if (position == 0)
             fragment = (ScrollTabHolderFragment) GlobalFeedsListFragment.newInstance(position);
-            else //if (position == 1)
+            else if (position == 1)
                 fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+            else {
+                fragment = (ScrollTabHolderFragment) settings.newInstance(position);
 
+            }
             if(fragment!=null){
 			mScrollTabHolders.put(position, fragment);
 

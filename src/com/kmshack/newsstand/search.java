@@ -1,6 +1,5 @@
 package com.kmshack.newsstand;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,13 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
-public class settings extends ScrollTabHolderFragment implements OnScrollListener {
+public class search extends ScrollTabHolderFragment implements OnScrollListener {
 
     private static final String ARG_POSITION = "position";
 
@@ -22,7 +16,7 @@ public class settings extends ScrollTabHolderFragment implements OnScrollListene
     private int mPosition;
 
     public static Fragment newInstance(int position) {
-        settings f = new settings();
+        search f = new search();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);

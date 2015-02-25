@@ -99,7 +99,7 @@ card_view:cardCornerRadius="4dp">
                     android:layout_alignParentRight="true"
                     android:contentDescription=""
                     android:background="@drawable/arrow_down" />
-
+2
             </RelativeLayout>
 
 
