@@ -2,15 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+    android:scrollY="0dp"
     >
 
-
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
     <SearchView
         android:layout_width="290dp"
-        android:layout_height="204dp"
+        android:layout_height="404dp"
         android:id="@+id/searchView"
         android:layout_gravity="center"
         android:iconifiedByDefault="false"
         android:queryHint="Type a group name" />
-
+</ScrollView>
 </FrameLayout><!-- From: file:/C:/Tara/FTT-UI/res/layout-xhdpi/activity_search.xml -->

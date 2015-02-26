@@ -67,7 +67,7 @@
             android:layout_height="56dp"
             android:orientation="horizontal"
             android:layout_gravity="bottom"
-
+            android:id="@+id/toolbardown"
             android:gravity="center"
            >
 
@@ -76,7 +76,7 @@
                 android:layout_height="56dp"
                 android:text="Post"
                 android:id="@+id/Post"
-                android:background="#03A9F4"
+                android:background="#b71c1c"
                 android:textColor="#ffffffff" />
         </LinearLayout>
 

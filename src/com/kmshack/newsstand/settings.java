@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,7 +46,6 @@ public class settings extends ScrollTabHolderFragment implements OnScrollListene
        //  v = inflater.inflate(R.layout.activity_main, null);
 
 
-
         return inflater.inflate(R.layout.activity_search, container, false);
 
     }
@@ -52,15 +53,13 @@ public class settings extends ScrollTabHolderFragment implements OnScrollListene
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-//        TextView title = (TextView) v.findViewById(R.id.title);
+        //  TextView title = (TextView) v.findViewById(R.id.title);
 //        title.setText("Hello");
 //        title.setTextColor(Color.BLUE);
     }
 
     @Override
     public void adjustScroll(int scrollHeight) {
-
 
 
     }

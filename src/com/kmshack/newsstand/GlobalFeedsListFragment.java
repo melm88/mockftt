@@ -2,12 +2,16 @@ package com.kmshack.newsstand;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -88,11 +92,34 @@ public class GlobalFeedsListFragment extends ScrollTabHolderFragment implements 
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		if (mScrollTabHolder != null)
 			mScrollTabHolder.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount, mPosition);
-	}
 
+
+	}
+    int mLastFirstVisibleItem = 0;
+    boolean mIsScrollingUp = true;
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// nothing
-	}
+        // nothing
 
+        LinearLayout lv = (LinearLayout) getActivity().findViewById(R.id.toolbardown);
+        ListView lw = (ListView) getActivity().findViewById(R.id.listView);
+
+
+
+        if (view.getId() == lw.getId()) {
+            final int currentFirstVisibleItem = lw.getFirstVisiblePosition();
+            if (currentFirstVisibleItem > mLastFirstVisibleItem) {
+                mIsScrollingUp = false;
+                lv.setVisibility(View.INVISIBLE);
+                Log.d("MYLOG",mLastFirstVisibleItem+" "+mIsScrollingUp);
+
+            } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
+                mIsScrollingUp = true;
+                lv.setVisibility(View.VISIBLE);
+                Log.d("MYLOG",mLastFirstVisibleItem+" "+mIsScrollingUp);
+            }
+
+            mLastFirstVisibleItem = currentFirstVisibleItem;
+        }
+    }
 }

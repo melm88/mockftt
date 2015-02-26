@@ -17,7 +17,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -39,7 +38,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,13 +94,15 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		
 		//mHeaderPicture is the KenBurnsSupportView which provides the background images
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
-		mHeaderPicture.setResourceIds(R.drawable.header_color_1, R.drawable.header_color_2);
+		mHeaderPicture.setResourceIds(R.drawable.red,R.drawable.red);
 		//mHeaderLogo is the profile picture holder
 		mHeaderLogo = (ImageView) findViewById(R.id.header_logo);
 		mHeader = findViewById(R.id.header);
-
+        PagerSlidingTabStrip.lv = (LinearLayout) findViewById(R.id.toolbardown);
 		//the pager-styled-tab layout and its view-pager (right-left swipe screen change)
 		mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+
+
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setOffscreenPageLimit(4);
 
@@ -462,13 +463,19 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
             Fragment fragment1=null;
             android.support.v4.app.FragmentManager fm =   getSupportFragmentManager();
 			ScrollTabHolderFragment fragment = null;
-            if (position == 0)
+            if (position == 0){
+                //Toast.makeText(MainActivity.this,"tab1",Toast.LENGTH_SHORT).show();
             fragment = (ScrollTabHolderFragment) GlobalFeedsListFragment.newInstance(position);
+            }
             else if (position == 1)
-                fragment = (ScrollTabHolderFragment) SampleListFragment.newInstance(position);
+            {
+                fragment = (ScrollTabHolderFragment) GroupListFragment.newInstance(position);
+                //Toast.makeText(MainActivity.this,"tab2",Toast.LENGTH_SHORT).show();
+            }
             else {
                 fragment = (ScrollTabHolderFragment) settings.newInstance(position);
 
+                //Toast.makeText(MainActivity.this,"tab3/4",Toast.LENGTH_SHORT).show();
             }
             if(fragment!=null){
 			mScrollTabHolders.put(position, fragment);

@@ -29,10 +29,10 @@ public class EntryAdapter extends ArrayAdapter<Entry>
 	private Context context;
 	private ArrayList<Entry> items;
 	private static LayoutInflater inflater=null;
-	public ImageLoader imageLoader; 
+    public ImageLoader imageLoader;
 
 
-	public static class ViewHolder
+    public static class ViewHolder
 	{
 
 		public TextView title;

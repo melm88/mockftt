@@ -2,6 +2,7 @@ C:\Tara\FTT-UI\build\intermediates\classes\debug
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-e74d41b708684e8dce4763c4839cddbb768fbeae.jar
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-9f6a6e91f33857920bdb928a345781b34db7b6c3.jar
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\nineoldandroids-2.4.0-5573e59b65b1d011c379466fc00a6a54def67376.jar
+C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\picasso-2.5.0-f600e743e7b832fd30af6da6510e21acdab011e1.jar
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-9705ae2683a5255e55a1e950229b60c0febc6af2.jar
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-004ddde7d26a957b0651a9d1f71251158f7e2096.jar
 C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-5152bbbda82a4622bfc599f4826e3679af1e872a.jar

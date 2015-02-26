@@ -4,25 +4,27 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
-public class SampleListFragment extends ScrollTabHolderFragment implements OnScrollListener {
+public class GroupListFragment extends ScrollTabHolderFragment implements OnScrollListener {
 
 	private static final String ARG_POSITION = "position";
 
 	private ListView mListView;
-	private ArrayList<String> mListItems;
+
 
 	private int mPosition;
 
 	public static Fragment newInstance(int position) {
-		SampleListFragment f = new SampleListFragment();
+		GroupListFragment f = new GroupListFragment();
 		Bundle b = new Bundle();
 		b.putInt(ARG_POSITION, position);
 		f.setArguments(b);
@@ -35,11 +37,8 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
 		super.onCreate(savedInstanceState);
 		mPosition = getArguments().getInt(ARG_POSITION);
 
-		mListItems = new ArrayList<String>();
 
-		for (int i = 1; i <= 100; i++) {
-			mListItems.add(i + ". item - currnet page: " + (mPosition + 1));
-		}
+
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
 
 		View placeHolderView = inflater.inflate(R.layout.view_header_placeholder, mListView, false);
 		mListView.addHeaderView(placeHolderView);
-
+       
 		return v;
 	}
 
@@ -91,10 +90,29 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
 		if (mScrollTabHolder != null)
 			mScrollTabHolder.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount, mPosition);
 	}
-
+    int mLastFirstVisibleItem = 0;
+    boolean mIsScrollingUp = true;
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// nothing
+        LinearLayout lv = (LinearLayout) getActivity().findViewById(R.id.toolbardown);
+
+
+
+        if (view.getId() == mListView.getId()) {
+            final int currentFirstVisibleItem = mListView.getFirstVisiblePosition();
+            if (currentFirstVisibleItem > mLastFirstVisibleItem) {
+                mIsScrollingUp = false;
+                lv.setVisibility(View.INVISIBLE);
+                Log.d("MYLOG", mLastFirstVisibleItem + " " + mIsScrollingUp);
+
+            } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
+                mIsScrollingUp = true;
+                lv.setVisibility(View.VISIBLE);
+                Log.d("MYLOG",mLastFirstVisibleItem+" "+mIsScrollingUp);
+            }
+
+            mLastFirstVisibleItem = currentFirstVisibleItem;
+        }
 	}
 
 }

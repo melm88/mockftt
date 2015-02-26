@@ -2,6 +2,27 @@
 <items version="2" >
 
     <item
+        jar="C:\Tara\FTT-UI\libs\picasso-2.5.0.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="7ff0e000d1e27e356567f56c92af3b8ab912636f">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\picasso-2.5.0-f600e743e7b832fd30af6da6510e21acdab011e1.jar" />
+    </item>
+    <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-9705ae2683a5255e55a1e950229b60c0febc6af2.jar" />
+    </item>
+    <item
+        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-004ddde7d26a957b0651a9d1f71251158f7e2096.jar" />
+    </item>
+    <item
         jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\cardview-v7\21.0.3\classes.jar"
         jumboMode="false"
         revision="21.0.1"
@@ -28,20 +49,6 @@
         revision="21.0.1"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-e74d41b708684e8dce4763c4839cddbb768fbeae.jar" />
-    </item>
-    <item
-        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-9705ae2683a5255e55a1e950229b60c0febc6af2.jar" />
-    </item>
-    <item
-        jar="C:\Tara\FTT-UI\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Tara\FTT-UI\build\intermediates\pre-dexed\debug\classes-004ddde7d26a957b0651a9d1f71251158f7e2096.jar" />
     </item>
 
 </items>

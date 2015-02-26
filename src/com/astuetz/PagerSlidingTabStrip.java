@@ -37,16 +37,20 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kmshack.newsstand.MainActivity;
 import com.kmshack.newsstand.R;
 
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
-	public interface IconTabProvider {
+
+    public interface IconTabProvider {
 		public int getPageIconResId(int position);
 	}
 
@@ -98,8 +102,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private int tabBackgroundResId = R.drawable.background_tab;
 
 	private Locale locale;
-
-	public PagerSlidingTabStrip(Context context) {
+    public static LinearLayout lv = null;
+    public PagerSlidingTabStrip(Context context) {
 		this(context, null);
 	}
 
@@ -108,6 +112,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	public PagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
+
 		super(context, attrs, defStyle);
 
 		setFillViewport(true);
@@ -388,6 +393,22 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		@Override
 		public void onPageSelected(int position) {
+            Button post =(Button)lv.getChildAt(0);
+            if(position >1){
+
+
+         lv.setVisibility(View.INVISIBLE);}
+        else {
+                if(position==1){
+
+                    post.setText("Create a Group");
+                }
+                else
+                {
+                    post.setText("Post");
+                }
+             lv.setVisibility(View.VISIBLE);
+        }
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);
 			}
