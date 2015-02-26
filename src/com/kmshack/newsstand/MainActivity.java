@@ -92,12 +92,15 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		setSupportActionBar(toolbar);
 		icon = (ImageView) findViewById(R.id.icon);
 		title = (TextView) findViewById(R.id.title);
-
+		
+		//mHeaderPicture is the KenBurnsSupportView which provides the background images
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
 		mHeaderPicture.setResourceIds(R.drawable.header_color_1, R.drawable.header_color_2);
+		//mHeaderLogo is the profile picture holder
 		mHeaderLogo = (ImageView) findViewById(R.id.header_logo);
 		mHeader = findViewById(R.id.header);
 
+		//the pager-styled-tab layout and its view-pager (right-left swipe screen change)
 		mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setOffscreenPageLimit(4);
@@ -120,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	}
 	
 	
-	
+	//OnTouch listener (on profile image) which will launch image picker
 	private View.OnTouchListener imageTouchListener = new View.OnTouchListener() {
 	    @Override
 	    public boolean onTouch(View v, MotionEvent event) {
@@ -141,31 +144,24 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		
 	};
 	
+	//Based on the recieved intent from the image-picker perform image-fitting
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 	    if ((requestCode == PickImageId) && (resultCode == RESULT_OK) && (data != null))
 	    {
 	        Uri uri = data.getData();
-	        Log.d("clicker", "OnAct: "+uri);
-	        
+	        Log.d("clicker", "OnAct: "+uri);	        
 	        //Toast.makeText(this, ""+uri, Toast.LENGTH_SHORT/1500).show();
 
 	        String path = getPathToImage(uri);
 	        //Toast.makeText(this, path, Toast.LENGTH_SHORT).show();;
 	        
-	        //setPic(path, mHeaderLogo);
+	        //If image is not retrievable from image picker then show a toast
 	        if(path != null)
 	        	resizedPic(path, uri, mHeaderLogo);
 	        else
 	        	Toast.makeText(this, "Unable to get image. Please select image from Gallery", Toast.LENGTH_SHORT/1000).show();
 	        
-	        /*Log.d("clicker","Path: "+path);
-	        Picasso.with(this)
-	        .load(uri)
-	        .placeholder(R.drawable.ic_header_logo)
-	        .error(R.drawable.ic_header_logo)
-	        .transform(new RoundedTransformation(50, 4))	    
-	        .into(mHeaderLogo);*/
 	        
 	        /*mHeaderLogo.setImageURI(uri);
 	        mHeaderLogo.setMaxWidth(100);
@@ -178,18 +174,24 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	private Bitmap getOrientationImage(String src, Bitmap bitmap, int newWidth, int newHeight){
 		ExifInterface exifInterface;
 		try {
+			//ExIfInterface is used on the source image to understand the orientation
 			exifInterface = new ExifInterface(src);
 			int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 			Log.d("clickerz","Init... EXIF "+orientation);
+			
+			//Get Image width and height
 			int width = bitmap.getWidth();
 		    int height = bitmap.getHeight();
 		    Log.d("clickerz", "Image H:"+height+" | W:"+width + " || Rec H:"+newHeight+" | W:"+newWidth);
+		    
+		    //Re-scaled image width and height factor
 		    float scaleWidth = ((float) newWidth) / width;
 		    float scaleHeight = ((float) newHeight) / height;
 		    Log.d("clickerz", "Scaled H:"+scaleHeight+" | W:"+scaleWidth);
 		    
 			Matrix matrix = new Matrix();			
 			
+			//According to the orientation, rotate the image using matrix.rotate()
 			switch (orientation) {
 		    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
 		        //matrix.setScale(-1, 1);
@@ -220,6 +222,9 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		    }			
 		    
 			//matrix.postScale(0.064f, 0.036f);
+			
+			//Conditions to check un-even sizing and to ensure that the final image appears
+			//as a square (in most conditions)
 			if((float)width/(float)height < 1.75f && (orientation != 1)) {
 				matrix.postScale(scaleWidth, scaleHeight);
 				Log.d("clickerz","First: "+((float)width/(float)height)+ " | OR: "+orientation);
@@ -231,6 +236,9 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 				Log.d("clickerz","Second: "+((float)width/(float)height)+ " | OR: "+orientation);
 			}
 			
+			//Call createBitmap() to re-scale the image based on the conditions
+			//and then call RoundedTransformation function from picasso to
+			//get image with rounded corners
 			Bitmap oriented = null;
 			 try {
 				 oriented = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
@@ -254,6 +262,8 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	}
 	
 	private void resizedPic(String path, Uri uri, ImageView destination){
+		//Setting height and width to a size 250x250.
+		//h and w are used for the re-scaling factor.
 		int h = 250;
 		int w = 250;
 		try {
@@ -261,13 +271,19 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 			//Bitmap.createScaledBitmap(bmp, w, h, true);
 			//mHeaderLogo.setImageBitmap(bmp);
 			//mHeaderLogo.setImageDrawable(getResizedBitmap(bmp, h, w));
+			
+			//Create BitmapFactory options and read in  the image from the received uri.
+			//Pass the bitmap to 'getOrientationImage()' to re-scale and maintain
+			//orientation
 			Log.d("clicker","Initiate...");
 			Options options = new BitmapFactory.Options();
 		    options.inScaled = false;
 		    Bitmap bmp = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
 			getOrientationImage(path, bmp, w, h);
 			//mHeaderLogo.setImageDrawable(new BitmapDrawable(getOrientationImage(path, bmp, w, h)));
-			Log.d("clicker","Done...");			
+			Log.d("clicker","Done...");	
+			
+			//Re-cyle the bitmaps
 			if(bmp!=null && !bmp.isRecycled()){
 				bmp.recycle();
 			}
@@ -278,55 +294,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		}
 	}
 	
-
-
-	public Drawable getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
-	    int width = bm.getWidth();
-	    int height = bm.getHeight();
-	    float scaleWidth = ((float) newWidth) / width;
-	    float scaleHeight = ((float) newHeight) / height;
-	    Log.d("clicker", "scaled H:"+scaleHeight+" | W:"+scaleWidth);
-	    // CREATE A MATRIX FOR THE MANIPULATION
-	    Matrix matrix = new Matrix();
-	    // RESIZE THE BIT MAP
-	    matrix.postScale(scaleWidth, scaleHeight);
-	    
-	    // "RECREATE" THE NEW BITMAP
-	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-	    BitmapDrawable bmd = new BitmapDrawable(resizedBitmap);
-	    resizedBitmap.recycle();
-	    return bmd;
-	}
-
-
-	
-	private void setPic(String imagePath, ImageView destination) {
-	    int targetW = destination.getWidth();
-	    int targetH = destination.getHeight();
-	    Log.d("clicker", "W: "+targetW+" | H:"+targetH);
-	    
-	    // Get the dimensions of the bitmap
-	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-	    bmOptions.inJustDecodeBounds = true;
-	    
-	    BitmapFactory.decodeFile(imagePath, bmOptions);
-	    int photoW = bmOptions.outWidth;
-	    int photoH = bmOptions.outHeight;
-	    Log.d("clicker", "pW: "+photoW+" | pH:"+photoH);
-
-	    // Determine how much to scale down the image
-	    int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-	    Log.d("clicker", "scale: "+scaleFactor);
-
-	    // Decode the image file into a Bitmap sized to fill the View
-	    bmOptions.inJustDecodeBounds = false;
-	    bmOptions.inSampleSize = scaleFactor;
-	    
-
-	    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, bmOptions);
-	    destination.setImageBitmap(bitmap);
-	}
-	
+	//Return an image (string) path from the given Uri
 	private String getPathToImage(Uri uri)
 	{
 	    String path = null;
@@ -360,6 +328,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 
 	@Override
 	public void onPageSelected(int position) {
+		//Identify which tab we are in, currently.
 		SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
 		ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
 
@@ -368,6 +337,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount, int pagePosition) {
+		//Scroll effect for making the transitions from main background image to a simple action bar
 		if (mViewPager.getCurrentItem() == pagePosition) {
 			int scrollY = getScrollY(view);
 			ViewHelper.setTranslationY(mHeader, Math.max(-scrollY, mMinHeaderTranslation));
@@ -461,6 +431,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		return (ImageView)findViewById(android.support.v7.appcompat.R.id.home);
 	}
 
+	//View pager class for changing pages based on tab selection (or) swipe (right-left)
 	public class PagerAdapter extends FragmentPagerAdapter {
 
 		private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
@@ -506,6 +477,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 }
 
 
+//Class which implements transformation effects from Picasso project
 class RoundedTransformation implements com.squareup.picasso.Transformation {
     private final int radius;
     private final int margin;  // dp
@@ -517,6 +489,7 @@ class RoundedTransformation implements com.squareup.picasso.Transformation {
         this.margin = margin;
     }
   
+    //Transform method to apply rounded edges effect to the given image.
     @Override
     public Bitmap transform(final Bitmap source) {
         final Paint paint = new Paint();

@@ -29,6 +29,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
 		return f;
 	}
 
+	//Default list view elements -generated dynamically
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
