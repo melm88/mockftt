@@ -23,7 +23,7 @@
 			android:layout_width="@dimen/header_logo_size"
 			android:layout_height="@dimen/header_logo_size"
 			android:layout_gravity="center"
-			android:src="@drawable/ic_header_logo" />
+			android:src="@drawable/default_user2" />
 
 		<com.astuetz.PagerSlidingTabStrip
 			android:id="@+id/tabs"
