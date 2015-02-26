@@ -204,6 +204,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			}
 
 		}*/
+		
+		//Set the tab images statically (Order: Globe, Group, Search, Settings)
 		addIconTab(0, R.drawable.ic_action_web_site);
 		addIconTab(1, R.drawable.ic_action_group);
 		addIconTab(2, R.drawable.ic_action_search);
@@ -231,6 +233,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	}
 
+	//Add a text tab
 	private void addTextTab(final int position, String title) {
 
 		TextView tab = new TextView(getContext());
@@ -241,6 +244,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		addTab(position, tab);
 	}
 
+	//Add an Icon based tab
 	private void addIconTab(final int position, int resId) {
 
 		ImageButton tab = new ImageButton(getContext());
@@ -321,15 +325,15 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		final int height = getHeight();
 
-		// draw indicator line
+		// draw indicator line. It's currently white in color
 		rectPaint.setColor(indicatorColor);
 
-		// default: line below current tab
+		// default: line below current tab. White in color
 		View currentTab = tabsContainer.getChildAt(currentPosition);
 		float lineLeft = currentTab.getLeft();
 		float lineRight = currentTab.getRight();
 
-		// if there is an offset, start interpolating left and right coordinates between current and next tab
+		// if there is an offset, start interpolating left and right coordinates between current tab and next tab
 		if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
 			View nextTab = tabsContainer.getChildAt(currentPosition + 1);
@@ -342,13 +346,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
-		// draw underline
-
+		// draw an underline
 		rectPaint.setColor(underlineColor);
 		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 
-		// draw divider
-
+		// draw a divider
 		dividerPaint.setColor(dividerColor);
 		for (int i = 0; i < tabCount - 1; i++) {
 			View tab = tabsContainer.getChildAt(i);
