@@ -95,7 +95,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		
 		//mHeaderPicture is the KenBurnsSupportView which provides the background images
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
-		mHeaderPicture.setResourceIds(R.drawable.header_color_1, R.drawable.header_color_2);
+		mHeaderPicture.setResourceIds(R.drawable.night_bg, R.drawable.night_bg);
 		//mHeaderLogo is the profile picture holder
 		mHeaderLogo = (ImageView) findViewById(R.id.header_logo);
 		mHeader = findViewById(R.id.header);
