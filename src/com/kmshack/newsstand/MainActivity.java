@@ -242,7 +242,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 			Bitmap oriented = null;
 			 try {
 				 oriented = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-				 Bitmap rounded_oriented = new RoundedTransformation(75, 4).transform(oriented);
+				 Bitmap rounded_oriented = new RoundedTransformation(150, 4).transform(oriented);
 				 mHeaderLogo.setImageDrawable(new BitmapDrawable(rounded_oriented));
 				 if(bitmap!=null && !bitmap.isRecycled())
 					 bitmap.recycle();
