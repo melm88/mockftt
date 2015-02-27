@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
@@ -41,6 +42,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -394,10 +396,21 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		@Override
 		public void onPageSelected(int position) {
             Button post =(Button)lv.getChildAt(0);
+            SearchView sv =(SearchView)lv.getChildAt(1);
+
+           // View mSearchEditFrame = findViewById(R.id.search_edit_frame);
+            //mSearchEditFrame.setBackgroundColor(Color.WHITE);
             if(position >1){
 
+            if(position == 2){
+                post.setVisibility(GONE);
+                sv.setVisibility(VISIBLE);
 
-         lv.setVisibility(View.INVISIBLE);}
+            }
+             else{
+                post.setVisibility(View.INVISIBLE);
+                sv.setVisibility(View.INVISIBLE);
+            }}
         else {
                 if(position==1){
 
@@ -407,7 +420,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 {
                     post.setText("Post");
                 }
-             lv.setVisibility(View.VISIBLE);
+                sv.setVisibility(GONE);
+                post.setVisibility(View.VISIBLE);
         }
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);

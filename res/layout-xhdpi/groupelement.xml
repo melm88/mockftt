@@ -38,11 +38,11 @@
                     android:padding="2dp" />
 
                 <ImageView
-                    android:id="@+id/img"
-                    android:layout_width="20dp"
+                    android:id="@+id/BandColor"
+                    android:layout_width="5dp"
                     android:layout_height="70dp"
-                    android:padding="2dp"
-                    android:src="@color/green" />
+
+                     />
 
                 <!-- Title Of News -->
 

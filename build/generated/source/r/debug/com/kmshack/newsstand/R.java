@@ -1560,6 +1560,7 @@ containing a value of this type.
         public static final int red=0x7f020049;
     }
     public static final class id {
+        public static final int BandColor=0x7f08004e;
         public static final int LinearLayout2=0x7f08004c;
         public static final int Post=0x7f080046;
         public static final int action_bar=0x7f080031;
@@ -1601,13 +1602,11 @@ containing a value of this type.
         public static final int icon=0x7f080026;
         public static final int ifRoom=0x7f080018;
         public static final int image=0x7f080023;
-        public static final int image0=0x7f080055;
-        public static final int image1=0x7f080056;
+        public static final int image0=0x7f080054;
+        public static final int image1=0x7f080055;
         public static final int imageButton1=0x7f080050;
         public static final int imageView1=0x7f080049;
-        public static final int img=0x7f08004e;
         public static final int img1=0x7f08004d;
-        public static final int info_text=0x7f080054;
         public static final int listMode=0x7f080009;
         public static final int listView=0x7f080052;
         public static final int list_item=0x7f080025;
@@ -1682,11 +1681,10 @@ containing a value of this type.
         public static final int fragment_list=0x7f03001b;
         public static final int group=0x7f03001c;
         public static final int groupelement=0x7f03001d;
-        public static final int just=0x7f03001e;
-        public static final int list_item=0x7f03001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030020;
-        public static final int view_header_placeholder=0x7f030021;
-        public static final int view_kenburns=0x7f030022;
+        public static final int list_item=0x7f03001e;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int view_header_placeholder=0x7f030020;
+        public static final int view_kenburns=0x7f030021;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0a0000;

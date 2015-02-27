@@ -37,6 +37,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,7 +77,12 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	private Toolbar toolbar;
 	private TextView title;
 	private ImageView icon;
-
+   //method to handle post button clicks
+    public void PostButtonClick(View view){
+        Button post = (Button)view;
+        String tag = post.getText().toString();
+        Toast.makeText(this,"You've Pressed '"+tag+"' Button",Toast.LENGTH_SHORT).show();;
+    }
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -474,7 +480,11 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
                 fragment = (ScrollTabHolderFragment) GroupListFragment.newInstance(position);
                 //Toast.makeText(MainActivity.this,"tab2",Toast.LENGTH_SHORT).show();
             }
-            else {
+            else if(position == 2) {
+
+                        fragment = (ScrollTabHolderFragment) SearchListFragment.newInstance(position);
+            }
+            else{
                 fragment = (ScrollTabHolderFragment) settings.newInstance(position);
 
                 //Toast.makeText(MainActivity.this,"tab3/4",Toast.LENGTH_SHORT).show();

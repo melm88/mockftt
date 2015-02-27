@@ -39,6 +39,7 @@ public class EntryAdapter extends ArrayAdapter<Entry>
 		public TextView subtitle;
 		public TextView time;
 		public ImageView image;
+        public ImageView BandColor;
 
 	}
 
@@ -70,7 +71,8 @@ public class EntryAdapter extends ArrayAdapter<Entry>
 			holder.title = (TextView) vi.findViewById(R.id.title);
 			holder.subtitle=(TextView)vi.findViewById(R.id.ds1);
 			holder.image=(ImageView)vi.findViewById(R.id.img1);
-			//holder.time=(TextView)vi.findViewById(R.id.date);		
+			//holder.time=(TextView)vi.findViewById(R.id.date);
+            holder.BandColor=(ImageView)vi.findViewById(R.id.BandColor);
 			vi.setTag( holder );
 		}
 		else
@@ -93,7 +95,7 @@ public class EntryAdapter extends ArrayAdapter<Entry>
 		{			
 			e.printStackTrace();
 		}
-
+        holder.BandColor.setBackgroundColor(ei.BandColor);
 		if(holder.subtitle != null)
 		{
 			String sub = ei.description;				

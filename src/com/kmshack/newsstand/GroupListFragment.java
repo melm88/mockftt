@@ -2,6 +2,7 @@ package com.kmshack.newsstand;
 
 import java.util.ArrayList;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -61,16 +62,16 @@ public class GroupListFragment extends ScrollTabHolderFragment implements OnScro
 
        // mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R.id.text1, mListItems));
         ArrayList<Entry> sortedlist=new ArrayList<Entry>();
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("Create a new group!", "", "", ""));
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google"));
-        sortedlist.add(new Entry("Create a new group!", "", "", ""));
+        sortedlist.add(new Entry(" Team", "hello", "Standford Girls Water Polo", "google", Color.RED));
+        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google",Color.BLUE));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google",Color.YELLOW));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google",Color.GREEN));
+
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google",Color.GRAY));
+        sortedlist.add(new Entry("San Carlos Car pool!", "hello", "Standford Girls Water Polo", "google",Color.MAGENTA));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google",Color.RED));
+        sortedlist.add(new Entry("18 A travel Team", "hello", "Standford Girls Water Polo", "google",Color.BLUE));
+        sortedlist.add(new Entry("Create a new group!", "", "", "",Color.DKGRAY));
         EntryAdapter eadapter = new EntryAdapter(getActivity(),sortedlist);
         mListView.setAdapter(eadapter);
 	}

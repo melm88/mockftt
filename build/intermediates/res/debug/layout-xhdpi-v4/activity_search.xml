@@ -10,12 +10,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
-    <SearchView
-        android:layout_width="290dp"
-        android:layout_height="404dp"
-        android:id="@+id/searchView"
-        android:layout_gravity="center"
-        android:iconifiedByDefault="false"
-        android:queryHint="Type a group name" />
+
 </ScrollView>
 </FrameLayout><!-- From: file:/C:/Tara/FTT-UI/res/layout-xhdpi/activity_search.xml -->

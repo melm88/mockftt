@@ -2,7 +2,7 @@
 	android:id="@+id/listView"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:divider="#ddd"
-	android:dividerHeight="1px"
+
+	android:dividerHeight="2px"
 	android:scrollbars="none" />
 <!-- From: file:/C:/Tara/FTT-UI/res/layout-xhdpi/fragment_list.xml -->

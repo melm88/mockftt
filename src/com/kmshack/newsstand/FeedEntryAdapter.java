@@ -2,6 +2,7 @@ package com.kmshack.newsstand;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class FeedEntryAdapter extends ArrayAdapter<Entry>
 		public TextView subtitle;
 		public TextView time;
 		public ImageView image;
+        public ImageView BandColor;
 
 	}
 
@@ -66,6 +68,7 @@ public class FeedEntryAdapter extends ArrayAdapter<Entry>
 			holder.title = (TextView) vi.findViewById(R.id.title);
 			holder.subtitle=(TextView)vi.findViewById(R.id.ds1);
 			holder.image=(ImageView)vi.findViewById(R.id.img1);
+            holder.BandColor=(ImageView)vi.findViewById(R.id.BandColor);
 			//holder.time=(TextView)vi.findViewById(R.id.date);		
 			vi.setTag( holder );
 		}
@@ -89,7 +92,7 @@ public class FeedEntryAdapter extends ArrayAdapter<Entry>
 		{			
 			e.printStackTrace();
 		}
-
+        holder.BandColor.setBackgroundColor(ei.BandColor);
 		if(holder.subtitle != null)
 		{
 			String sub = ei.description;				
