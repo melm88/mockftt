@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -35,6 +36,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -81,7 +83,23 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
     public void PostButtonClick(View view){
         Button post = (Button)view;
         String tag = post.getText().toString();
-        Toast.makeText(this,"You've Pressed '"+tag+"' Button",Toast.LENGTH_SHORT).show();;
+       // Toast.makeText(this,"You've Pressed '"+tag+"' Button",Toast.LENGTH_SHORT).show();
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.aboutus);
+
+//        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+//        // if button is clicked, close the custom dialog
+//        dialogButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+
+
+        dialog.show();
+
     }
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +119,7 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 		//mHeaderPicture is the KenBurnsSupportView which provides the background images
 		mHeaderPicture = (KenBurnsSupportView) findViewById(R.id.header_picture);
 
-		mHeaderPicture.setResourceIds(R.drawable.red,R.drawable.red);
+		mHeaderPicture.setResourceIds(R.drawable.header_color_1,R.drawable.header_color_1);
 
 		//mHeaderLogo is the profile picture holder
 		mHeaderLogo = (ImageView) findViewById(R.id.header_logo);
@@ -338,10 +356,14 @@ public class MainActivity extends ActionBarActivity implements ScrollTabHolder, 
 	@Override
 	public void onPageSelected(int position) {
 		//Identify which tab we are in, currently.
-		SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
-		ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
+        try {
+            SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
+            ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
 
-		currentHolder.adjustScroll((int) (mHeader.getHeight() + ViewHelper.getTranslationY(mHeader)));
+            currentHolder.adjustScroll((int) (mHeader.getHeight() + ViewHelper.getTranslationY(mHeader)));
+        } catch(NullPointerException e){
+           e.printStackTrace();
+        }
 	}
 
 	@Override

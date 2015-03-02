@@ -38,7 +38,7 @@ public class ImageLoader {
         executorService=Executors.newFixedThreadPool(5);
     }
     
-    final int stub_id= R.drawable.index;
+    final int stub_id= R.drawable.default_user2;
     public void DisplayImage(String url, ImageView imageView)
     {
         imageViews.put(imageView, url);

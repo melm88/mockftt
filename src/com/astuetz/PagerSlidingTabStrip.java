@@ -418,7 +418,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
                 }
                 else
                 {
-                    post.setText("Post");
+                    post.setText("About us");
                 }
                 sv.setVisibility(GONE);
                 post.setVisibility(View.VISIBLE);
